@@ -20,6 +20,8 @@ public class MainRestController
     @Autowired
     UsertypelinkRepository usertypelinkRepository;
     @Autowired
+    OrderRepository orderRepository;
+    @Autowired
     UserService userService;
 
     @GetMapping("/get/instance")
@@ -75,5 +77,12 @@ public class MainRestController
             return new  ResponseEntity<>(user,HttpStatus.NO_CONTENT) ;
         }
 
+    }
+
+    @PostMapping("save/order")
+    public ResponseEntity<String> saveOrder(@RequestBody Order order)
+    {
+        orderRepository.save(order);
+        return new ResponseEntity<>("New Order Saved", HttpStatus.OK);
     }
 }
