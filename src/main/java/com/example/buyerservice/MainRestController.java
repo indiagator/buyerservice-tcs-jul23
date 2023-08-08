@@ -1,6 +1,9 @@
 package com.example.buyerservice;
 
 import com.netflix.discovery.converters.Auto;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.Counter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +14,15 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin
 public class MainRestController
 {
+    //@Autowired
+    //Counter visitCounter;
+
+    @Autowired
+    io.micrometer.core.instrument.Counter anotherVisitCounter;
+
     @Autowired
     CredentialRepository credentialRepository;
     @Autowired
@@ -27,6 +37,7 @@ public class MainRestController
     @GetMapping("/get/instance")
     public ResponseEntity<String> getInistance()
     {
+        anotherVisitCounter.increment();
         return new ResponseEntity<>("buyer service instance 1", HttpStatus.OK);
     }
 
